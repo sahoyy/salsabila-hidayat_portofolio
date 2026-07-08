@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salsabila Hidayat — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0e12;
+    --ivory:#f6f2e7;
+    --cobalt:#1b2fee;
+    --cobalt-dark:#121fb0;
+    --gold:#c9a227;
+    --paper:#fbf8f1;
+    --line:#0e0e12;
+    --shadow-c: rgba(14,14,18,1);
+    --gap: 8px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  ::selection{ background:var(--cobalt); color:var(--ivory); }
+
+  h1,h2,h3{ font-family:'Playfair Display', serif; font-weight:900; line-height:1.02; letter-spacing:-0.01em; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    font-size:0.72rem;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    color:var(--ink);
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px; height:3px; background:var(--cobalt);
+    display:inline-block;
+  }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- Scrollbar / focus ---------- */
+  ::-webkit-scrollbar{ width:12px; }
+  ::-webkit-scrollbar-track{ background:var(--ivory); }
+  ::-webkit-scrollbar-thumb{ background:var(--ink); border:3px solid var(--ivory); }
+  :focus-visible{ outline:3px solid var(--cobalt); outline-offset:3px; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:var(--ivory);
+    border-bottom:3px solid var(--ink);
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Playfair Display', serif; font-weight:900; font-size:1.15rem;
+    display:flex; align-items:center; gap:10px;
+    text-decoration:none;
+  }
+  .brand .dot{
+    width:12px; height:12px; background:var(--cobalt); border:2px solid var(--ink);
+    display:inline-block; transform:rotate(45deg);
+  }
+  nav.links{ display:flex; gap:28px; }
+  nav.links a{
+    font-family:'JetBrains Mono', monospace; text-transform:uppercase; font-size:0.72rem;
+    letter-spacing:0.1em; text-decoration:none; position:relative; padding-bottom:3px;
+  }
+  nav.links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:var(--cobalt);
+    transition:width .25s ease;
+  }
+  nav.links a:hover::after{ width:100%; }
+  .nav-cta{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.08em; text-decoration:none; background:var(--ink); color:var(--ivory);
+    padding:10px 16px; border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--cobalt);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .nav-cta:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--cobalt); }
+  .burger{ display:none; }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    position:relative;
+    min-height:100svh;
+    padding:150px 0 90px;
+    border-bottom:3px solid var(--ink);
+    overflow:hidden;
+    background:
+      linear-gradient(var(--ivory), var(--ivory));
+  }
+  #hero-canvas{
+    position:absolute; inset:0; width:100%; height:100%; z-index:0;
+    opacity:0.9;
+  }
+  .hero-grid{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(to right, rgba(14,14,18,0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(14,14,18,0.06) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero-kicker{
+    display:flex; align-items:center; gap:16px; margin-bottom:26px; flex-wrap:wrap;
+  }
+  .badge{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.1em; border:2px solid var(--ink); background:var(--paper);
+    padding:6px 12px; box-shadow:3px 3px 0 var(--ink);
+  }
+  h1.hero-title{
+    font-size:clamp(3rem, 9vw, 7.2rem);
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  h1.hero-title .accent{
+    color:var(--paper);
+    -webkit-text-stroke:2px var(--ink);
+    text-shadow:6px 6px 0 var(--cobalt);
+  }
+  .hero-role{
+    font-family:'JetBrains Mono', monospace; font-size:clamp(1rem,2.4vw,1.3rem);
+    text-transform:uppercase; letter-spacing:0.06em; font-weight:600;
+    margin:18px 0 30px; max-width:640px;
+  }
+  .hero-role .swap{ color:var(--cobalt-dark); border-bottom:3px solid var(--gold); }
+  .hero-desc{ max-width:560px; font-size:1.05rem; color:#2a2a30; margin-bottom:38px; }
+  .hero-actions{ display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; text-transform:uppercase;
+    letter-spacing:0.08em; text-decoration:none; padding:16px 26px;
+    border:3px solid var(--ink); display:inline-block; font-weight:600;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-solid{ background:var(--ink); color:var(--ivory); box-shadow:6px 6px 0 var(--cobalt); }
+  .btn-solid:hover{ transform:translate(3px,3px); box-shadow:3px 3px 0 var(--cobalt); }
+  .btn-outline{ background:var(--paper); color:var(--ink); box-shadow:6px 6px 0 var(--gold); }
+  .btn-outline:hover{ transform:translate(3px,3px); box-shadow:3px 3px 0 var(--gold); }
+
+  .hero-stats{
+    margin-top:70px; display:grid; grid-template-columns:repeat(4,1fr); border:3px solid var(--ink);
+  }
+  .hero-stats div{ padding:20px 18px; border-right:3px solid var(--ink); background:var(--paper); }
+  .hero-stats div:last-child{ border-right:none; }
+  .hero-stats .num{ font-family:'Playfair Display',serif; font-weight:900; font-size:2rem; color:var(--cobalt-dark); }
+  .hero-stats .lbl{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; margin-top:6px; }
+
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:2;
+    font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.15em;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-cue .line{ width:2px; height:34px; background:var(--ink); animation:cue 1.8s ease-in-out infinite; }
+  @keyframes cue{ 0%,100%{ transform:scaleY(1); opacity:1;} 50%{ transform:scaleY(0.4); opacity:0.4;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:110px 0; border-bottom:3px solid var(--ink); position:relative; }
+  section.dark{ background:var(--ink); color:var(--ivory); }
+  section.dark .eyebrow{ color:var(--ivory); }
+  section.dark .eyebrow::before{ background:var(--gold); }
+  .section-head{ margin-bottom:56px; max-width:760px; }
+  .section-head h2{ font-size:clamp(2.2rem,5vw,3.6rem); margin-top:14px; }
+
+  /* ---------- ABOUT ---------- */
+  #about .about-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:start;
+  }
+  .about-text p{ font-size:1.08rem; margin-bottom:20px; max-width:52ch; }
+  .about-text strong{ color:var(--cobalt-dark); }
+  .edu-card{
+    background:var(--paper); border:3px solid var(--ink); box-shadow:8px 8px 0 var(--ink);
+    padding:26px; transform-style:preserve-3d; transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .edu-card:hover{ transform:translate(-4px,-4px) rotateX(2deg) rotateY(-2deg); box-shadow:12px 12px 0 var(--cobalt); }
+  .edu-card h3{ font-size:1.3rem; margin-bottom:4px; }
+  .edu-card .place{ font-family:'JetBrains Mono',monospace; font-size:0.75rem; text-transform:uppercase; color:var(--cobalt-dark); margin-bottom:14px; letter-spacing:0.04em; }
+  .edu-card .gpa{
+    display:inline-block; margin-top:14px; font-family:'JetBrains Mono',monospace;
+    background:var(--ink); color:var(--ivory); padding:5px 12px; font-size:0.75rem;
+  }
+  .edu-card ul{ margin:14px 0 0 18px; font-size:0.92rem; color:#333; }
+  .edu-card + .edu-card{ margin-top:24px; }
+
+  /* ---------- LENS SWITCHER (signature element) ---------- */
+  #lens{ perspective:1800px; }
+  .lens-tabs{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom:44px; }
+  .lens-tab{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; text-transform:uppercase;
+    letter-spacing:0.06em; padding:14px 20px; border:3px solid var(--ivory); background:transparent;
+    color:var(--ivory); cursor:pointer; transition:all .2s ease; font-weight:600;
+  }
+  .lens-tab.active{ background:var(--cobalt); border-color:var(--cobalt); color:var(--ivory); box-shadow:5px 5px 0 var(--gold); }
+  .lens-tab:not(.active):hover{ border-color:var(--gold); color:var(--gold); }
+
+  .lens-stage{ perspective:2000px; min-height:420px; }
+  .lens-card{
+    background:var(--paper); color:var(--ink); border:3px solid var(--ink);
+    box-shadow:10px 10px 0 var(--gold);
+    padding:44px;
+    transform-style:preserve-3d;
+    animation:flipIn .6s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes flipIn{
+    from{ transform:rotateY(-90deg); opacity:0; }
+    to{ transform:rotateY(0deg); opacity:1; }
+  }
+  .lens-card .lens-role{ font-family:'Playfair Display',serif; font-weight:900; font-size:2rem; margin-bottom:10px; color:var(--cobalt-dark); }
+  .lens-card .lens-summary{ max-width:64ch; margin-bottom:30px; font-size:1rem; color:#2a2a30; }
+  .chip-groups{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:24px; }
+  .chip-group h4{
+    font-family:'JetBrains Mono',monospace; text-transform:uppercase; font-size:0.7rem;
+    letter-spacing:0.1em; margin-bottom:12px; color:var(--cobalt-dark);
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; border:2px solid var(--ink);
+    padding:6px 10px; background:var(--ivory); transition:transform .15s ease, background .15s ease;
+  }
+  .chip:hover{ transform:translateY(-3px) rotate(-2deg); background:var(--gold); }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{ position:relative; margin-top:20px; }
+  .timeline::before{
+    content:""; position:absolute; left:14px; top:0; bottom:0; width:3px; background:var(--ink);
+  }
+  .tl-item{
+    position:relative; padding:0 0 46px 56px; opacity:0; transform:translateX(-40px) rotateY(-25deg);
+    transition:opacity .6s ease, transform .6s ease; transform-style:preserve-3d;
+  }
+  .tl-item.in{ opacity:1; transform:translateX(0) rotateY(0); }
+  .tl-item::before{
+    content:""; position:absolute; left:5px; top:6px; width:20px; height:20px;
+    background:var(--cobalt); border:3px solid var(--ink); transform:rotate(45deg);
+  }
+  .tl-card{
+    background:var(--paper); border:3px solid var(--ink); box-shadow:7px 7px 0 var(--ink);
+    padding:26px 28px; transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .tl-card:hover{ box-shadow:11px 11px 0 var(--cobalt); transform:translate(-3px,-3px); }
+  .tl-top{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
+  .tl-card h3{ font-size:1.35rem; }
+  .tl-date{ font-family:'JetBrains Mono',monospace; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; color:var(--cobalt-dark); white-space:nowrap; padding-top:4px; }
+  .tl-org{ font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#555; margin-bottom:14px; }
+  .tl-role-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; }
+  .tl-role-tags span{ font-family:'JetBrains Mono',monospace; font-size:0.65rem; text-transform:uppercase; background:var(--ink); color:var(--ivory); padding:4px 9px; }
+  .tl-card ul{ margin-left:18px; font-size:0.94rem; color:#2a2a30; }
+  .tl-card ul li{ margin-bottom:6px; }
+  .tl-link{
+    display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; text-decoration:none; color:var(--cobalt-dark);
+    border-bottom:1px dashed var(--cobalt-dark); width:fit-content;
+  }
+  .tl-link:hover{ color:var(--ink); border-color:var(--ink); }
+
+  /* ---------- LEADERSHIP ---------- */
+  .lead-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:26px; }
+  .lead-card{
+    background:var(--ivory); border:3px solid var(--ink); padding:26px; position:relative;
+    transform-style:preserve-3d; transition:transform .4s ease;
+  }
+  .lead-card:hover{ transform:rotateX(6deg) rotateY(-6deg) translateY(-6px); }
+  .lead-card::after{
+    content:""; position:absolute; inset:0; border:3px solid var(--gold); transform:translate(8px,8px); z-index:-1;
+  }
+  .lead-card .role{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--cobalt-dark); margin-bottom:10px; }
+  .lead-card h3{ font-size:1.15rem; margin-bottom:6px; }
+  .lead-card .date{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#666; margin-bottom:14px; }
+  .lead-card p{ font-size:0.9rem; color:#2a2a30; }
+
+  /* ---------- CERTS / AWARDS ---------- */
+  .cert-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:20px; }
+  .cert-card{
+    border:3px solid var(--ivory); padding:22px; display:flex; gap:16px; align-items:flex-start;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .cert-card:hover{ transform:translateZ(20px) scale(1.02); border-color:var(--gold); }
+  .cert-icon{
+    width:46px; height:46px; flex:none; border:2px solid var(--gold); display:flex; align-items:center;
+    justify-content:center; transform:rotate(45deg);
+  }
+  .cert-icon span{ transform:rotate(-45deg); font-family:'Playfair Display',serif; font-weight:900; color:var(--gold); }
+  .cert-card h4{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.02rem; margin-bottom:4px; }
+  .cert-card .cert-meta{ font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:uppercase; color:#b8b8c2; letter-spacing:0.05em; margin-bottom:10px; }
+  .cert-link{
+    display:inline-block; font-family:'JetBrains Mono',monospace; font-size:0.7rem; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--gold); text-decoration:none; border-bottom:1px dashed var(--gold);
+  }
+  .cert-link:hover{ color:var(--ivory); border-color:var(--ivory); }
+  .award-link{
+    display:block; margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--gold); text-decoration:none; border-bottom:1px dashed var(--gold); width:fit-content;
+  }
+  .award-link:hover{ color:var(--ivory); border-color:var(--ivory); }
+
+  .award-strip{ margin-top:56px; }
+  .award-strip h3{ color:var(--ivory); font-size:1.4rem; margin-bottom:22px; }
+  .award-list{ display:grid; gap:16px; }
+  .award-row{
+    display:grid; grid-template-columns:120px 1fr auto; gap:18px; align-items:center;
+    border-top:2px solid rgba(246,242,231,0.25); padding:16px 0;
+  }
+  .award-row:last-child{ border-bottom:2px solid rgba(246,242,231,0.25); }
+  .award-row .yr{ font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:0.8rem; }
+  .award-row .desc strong{ display:block; font-size:1rem; }
+  .award-row .desc span{ font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:#b8b8c2; }
+  .award-row .tag{ font-family:'JetBrains Mono',monospace; font-size:0.65rem; text-transform:uppercase; border:1px solid var(--gold); color:var(--gold); padding:5px 10px; white-space:nowrap; }
+
+  /* ---------- CONTACT ---------- */
+  #contact{ padding-bottom:60px; }
+  .contact-wrap{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:60px; align-items:end;
+  }
+  .contact-big{ font-size:clamp(2.4rem,6vw,4.6rem); }
+  .contact-big .cobalt{ color:var(--cobalt-dark); }
+  .contact-list{ list-style:none; margin-top:30px; }
+  .contact-list li{
+    border-bottom:2px solid var(--ink); padding:16px 0; display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono',monospace; font-size:0.95rem;
+  }
+  .contact-list li span.lbl{ text-transform:uppercase; font-size:0.68rem; letter-spacing:0.08em; color:#666; }
+  .contact-list a{ text-decoration:none; }
+  .contact-list a:hover{ color:var(--cobalt-dark); }
+  .contact-box{
+    border:3px solid var(--ink); background:var(--paper); box-shadow:9px 9px 0 var(--cobalt); padding:34px;
+  }
+  .contact-box p{ font-size:0.95rem; margin-bottom:20px; }
+
+  footer{ text-align:center; padding:26px 0; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; text-transform:uppercase; }
+
+  /* reveal-on-scroll generic */
+  .reveal{ opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (max-width: 860px){
+    nav.links, .nav-cta{ display:none; }
+    #about .about-grid, .contact-wrap{ grid-template-columns:1fr; }
+    .hero-stats{ grid-template-columns:repeat(2,1fr); }
+    .hero-stats div:nth-child(2){ border-right:none; }
+    .award-row{ grid-template-columns:1fr; gap:6px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="brand"><span class="dot"></span>SALSABILA H.</a>
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#lens">Focus</a>
+      <a href="#experience">Experience</a>
+      <a href="#leadership">Leadership</a>
+      <a href="#awards">Awards</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Get in touch</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-kicker">
+      <span class="badge">Karawang, West Java, Indonesia</span>
+      <span class="badge">Informatics — AI Specialization</span>
+    </div>
+    <h1 class="hero-title">SALSABILA<br><span class="accent">HIDAYAT</span></h1>
+    <p class="hero-role">Software Engineer <span class="swap">/</span> AI Engineer <span class="swap">/</span> Data &amp; Computer&nbsp;Vision</p>
+    <p class="hero-desc">Informatics undergraduate at President University building real academic products end-to-end — from computer-vision pipelines and NLP chatbots to production-ready web dashboards. I ship across the stack: model to interface.</p>
+    <div class="hero-actions">
+      <a href="#experience" class="btn btn-solid">View experience</a>
+      <a href="mailto:hidayatsalsa7@gmail.com" class="btn btn-outline">hidayatsalsa7@gmail.com</a>
+    </div>
+
+    <div class="hero-stats">
+      <div><div class="num">3.65</div><div class="lbl">GPA / 4.00</div></div>
+      <div><div class="num">8+</div><div class="lbl">Shipped projects</div></div>
+      <div><div class="num">6</div><div class="lbl">Certifications</div></div>
+      <div><div class="num">2027</div><div class="lbl">Expected grad.</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">About</span>
+      <h2>Building at the intersection of AI and interface.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm an Informatics undergraduate at <strong>President University</strong>, specializing in <strong>Artificial Intelligence</strong>. Across academic projects and virtual internships, I've moved fluidly between roles — writing the backend logic that powers a platform, training the computer-vision model behind it, and designing the interface people actually touch.</p>
+        <p>That range is intentional. I maintain focused resumes for Software Engineering, AI Engineering, Data Science, and Web Development because I genuinely work across all four — the tabs below let you see my experience through whichever lens matters to you.</p>
+      </div>
+      <div>
+        <div class="edu-card">
+          <div class="place">President University · Cikarang, Indonesia</div>
+          <h3>B.Sc. Informatics — AI Specialization</h3>
+          <p style="font-size:0.9rem;color:#444;">Expected Graduation 2027</p>
+          <ul>
+            <li>Artificial Intelligence, Machine Learning, Deep Learning</li>
+            <li>Computer Vision, Natural Language Processing</li>
+            <li>Software Engineering, Database Systems</li>
+            <li>Data Structures &amp; Algorithms</li>
+          </ul>
+          <span class="gpa">GPA 3.65 / 4.00</span>
+        </div>
+        <div class="edu-card">
+          <div class="place">SMA Modern Riyadhul Jannah · Subang, Indonesia</div>
+          <h3>Science Major</h3>
+          <p style="font-size:0.9rem;color:#444;">Graduated 2024 · Student Council President 2023–2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LENS SWITCHER ============ -->
+<section id="lens" class="dark">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Choose your lens</span>
+      <h2>One experience, four ways to read it.</h2>
+    </div>
+    <div class="lens-tabs" role="tablist">
+      <button class="lens-tab active" data-lens="se">Software Engineer</button>
+      <button class="lens-tab" data-lens="ai">AI Engineer</button>
+      <button class="lens-tab" data-lens="ds">Data Scientist</button>
+      <button class="lens-tab" data-lens="web">Web Developer</button>
+    </div>
+    <div class="lens-stage">
+      <div class="lens-card" id="lensCard">
+        <!-- injected by JS -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Experience</span>
+      <h2>Projects, shipped.</h2>
+    </div>
+    <div class="timeline" id="timeline">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEADERSHIP ============ -->
+<section id="leadership">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Leadership &amp; Activities</span>
+      <h2>Organizing beyond the codebase.</h2>
+    </div>
+    <div class="lead-grid">
+      <div class="lead-card reveal">
+        <div class="role">Member of External Affairs</div>
+        <h3>Zahirul Ma'ala</h3>
+        <div class="date">2024 — 2025</div>
+        <p>Contributed to external-facing initiatives and inter-organizational relations for Zahirul Ma'ala's programs and events.</p>
+      </div>
+      <div class="lead-card reveal">
+        <div class="role">Core Team Member</div>
+        <h3>President University Developer Club (PUDC)</h3>
+        <div class="date">Oct 2025 — Present</div>
+        <p>Supported execution of technical workshops and student development initiatives; helped organize technology-focused community activities.</p>
+      </div>
+      <div class="lead-card reveal">
+        <div class="role">Student Council President</div>
+        <h3>OSIS SMA Modern Riyadhul Jannah</h3>
+        <div class="date">Jan 2023 — Feb 2024</div>
+        <p>Led school-wide student organization programs; coordinated event planning, budgeting, and team management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTIFICATIONS + AWARDS ============ -->
+<section id="awards" class="dark">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Certifications</span>
+      <h2>Credentials on record.</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="cert-icon"><span>🔒</span></div>
+        <div>
+          <h4>AWS Security Best Practices: Network Infrastructure</h4>
+          <div class="cert-meta">Completed Aug 9, 2025</div>
+          <a class="cert-link" href="https://drive.google.com/file/d/12Z1ifqDMk-YdZbaOhK9ce63F0p4-nt5B/view?usp=sharing" target="_blank" rel="noopener">View certificate ↗</a>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><span>🔐</span></div>
+        <div>
+          <h4>AWS Security — Encryption Fundamentals</h4>
+          <div class="cert-meta">Completed Aug 9, 2025</div>
+          <a class="cert-link" href="https://drive.google.com/file/d/1Is7RSTliuWtLAQDtOd0vJMklCSO2k40n/view?usp=sharing" target="_blank" rel="noopener">View certificate ↗</a>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon"><span>AI</span></div>
+        <div>
+          <h4>AI Fundamentals: Language and Vision in AI</h4>
+          <div class="cert-meta">Certification</div>
+          <a class="cert-link" href="https://drive.google.com/file/d/1E_710hl2Sez33EkbsBNEZ13Pz6kRkdZk/view?usp=sharing" target="_blank" rel="noopener">View certificate ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-strip">
+      <h3>Recognition</h3>
+      <div class="award-list">
+        <div class="award-row">
+          <div class="yr">2026</div>
+          <div class="desc"><strong>Project Manager — Study Path 2026</strong><span>PUDC × Telkom University Jakarta × GDG Telkom Jakarta · Certificate of Appreciation</span><a class="award-link" href="https://drive.google.com/file/d/1O0YZStqZkHLei4y_l31h1EFmMFuhNRGu/view?usp=drive_link" target="_blank" rel="noopener">View certificate ↗</a></div>
+          <div class="tag">Project Manager</div>
+        </div>
+        <div class="award-row">
+          <div class="yr">May 2025</div>
+          <div class="desc"><strong>Zahirul Ma'ala Insightful Journey — with Gamais ITB</strong><span>Institut Teknologi Bandung · Certificate of Appreciation</span><a class="award-link" href="https://drive.google.com/file/d/1Z7bj7RTs1YAEQhOoNZMov4pP3mptHM60/view?usp=drive_link" target="_blank" rel="noopener">View certificate ↗</a></div>
+          <div class="tag">Vice Project Manager</div>
+        </div>
+        <div class="award-row">
+          <div class="yr">2026</div>
+          <div class="desc"><strong>Muharram Fest 2026</strong><span>Zahirul Ma'ala · Certificate of Appreciation</span><a class="award-link" href="https://drive.google.com/file/d/1ocXj9Ed6TYm8nRjZxpmNjMEAEXYnfxoH/view?usp=drive_link" target="_blank" rel="noopener">View certificate ↗</a></div>
+          <div class="tag">PIC, PR External</div>
+        </div>
+        <div class="award-row">
+          <div class="yr">Jan 2025</div>
+          <div class="desc"><strong>Bilateral Relations Between Indonesia and Ukraine</strong><span>President University</span><a class="award-link" href="https://drive.google.com/file/d/1UcL78Vp2KcrKhhlZQGfojefCm9vYAlDr/view?usp=drive_link" target="_blank" rel="noopener">View certificate ↗</a></div>
+          <div class="tag">Participant</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Contact</span>
+    </div>
+    <div class="contact-wrap">
+      <div>
+        <h2 class="contact-big">Let's build<br>something <span class="cobalt">real.</span></h2>
+        <ul class="contact-list">
+          <li><span class="lbl">Email</span><a href="mailto:hidayatsalsa7@gmail.com">hidayatsalsa7@gmail.com</a></li>
+          <li><span class="lbl">Phone</span><a href="tel:+62858144043 61">+62 858 144 043 61</a></li>
+          <li><span class="lbl">LinkedIn</span><a href="https://linkedin.com/in/salsabila-hidayat20" target="_blank" rel="noopener">linkedin.com/in/salsabila-hidayat20</a></li>
+          <li><span class="lbl">Location</span><span>Karawang, West Java, Indonesia</span></li>
+        </ul>
+      </div>
+      <div class="contact-box">
+        <p>Open to internships and collaborative projects across software engineering, AI/ML, and web development.</p>
+        <a class="btn btn-solid" href="mailto:hidayatsalsa7@gmail.com">Say hello →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Salsabila Hidayat — Designed &amp; built with intent.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ================= DATA ================= */
+const LENS_DATA = {
+  se: {
+    role: "Software Engineer",
+    summary: "Full-stack focused: designing system architecture, integrating backend services and APIs, and shipping database-driven features across React/Next.js frontends and Flask/FastAPI backends.",
+    groups: [
+      { title:"Languages", items:["Python","Java","JavaScript","PHP","SQL"] },
+      { title:"Frameworks", items:["React","Next.js","FastAPI","Flask"] },
+      { title:"Databases", items:["MySQL","PostgreSQL","SQLite"] },
+      { title:"Focus", items:["REST APIs","System Integration","OOP","Software Testing"] },
+    ]
+  },
+  ai: {
+    role: "AI Engineer",
+    summary: "Building applied AI features — NLP summarization and chatbots, LLM-integrated workflows, and computer-vision pipelines — then wiring them into working products.",
+    groups: [
+      { title:"AI / ML", items:["Machine Learning","Deep Learning","Computer Vision","NLP","LLM Integration"] },
+      { title:"Frameworks", items:["OpenCV","MediaPipe","FastAPI","Flask","React"] },
+      { title:"Practice", items:["Data Preprocessing","Model Evaluation","Object Detection"] },
+      { title:"Tools", items:["Docker","Git","Jupyter","Vercel"] },
+    ]
+  },
+  ds: {
+    role: "Data Scientist",
+    summary: "Turning raw datasets into decisions: cleaning and exploring data, engineering features, training classification/clustering models, and evaluating results rigorously.",
+    groups: [
+      { title:"Modeling", items:["Classification","Clustering","Model Evaluation","NLP","Computer Vision"] },
+      { title:"Data Work", items:["Data Cleaning","EDA","Feature Engineering","Statistical Analysis"] },
+      { title:"Libraries", items:["Pandas","NumPy","Scikit-Learn","OpenCV"] },
+      { title:"Tools", items:["Jupyter","Git","VS Code"] },
+    ]
+  },
+  web: {
+    role: "Web Developer",
+    summary: "Responsive, accessible interfaces backed by solid REST APIs — from dashboards for real-time data to full booking systems with session and payment workflows.",
+    groups: [
+      { title:"Frontend", items:["HTML","CSS","JavaScript","React","Next.js"] },
+      { title:"Backend", items:["Flask","FastAPI","REST API Design"] },
+      { title:"Databases", items:["MySQL","PostgreSQL","Firebase"] },
+      { title:"Practice", items:["Responsive Design","CRUD","Session Management"] },
+    ]
+  }
+};
+
+const EXPERIENCE = [
+  {
+    title:"PU Academic Hub",
+    repo:"https://github.com/sahoyy/Academic-Compass",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Jan 2026 – May 2026",
+    tags:["Software Engineer","AI Engineer"],
+    bullets:[
+      "Developed core platform features for study groups, discussions, and academic events.",
+      "Integrated backend services and APIs for real-time platform operations.",
+      "Built NLP-powered discussion summarization, FAQ generation, and chatbot services."
+    ]
+  },
+  {
+    title:"NutriBot",
+    repo:"https://github.com/sahoyy/nutribot",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Jan 2026 – May 2026",
+    tags:["Frontend Developer"],
+    bullets:[
+      "Built nutrition-tracking and calorie-monitoring interfaces for a health web app.",
+      "Implemented responsive dashboards integrated with chatbot recommendation features.",
+      "Improved accessibility and UX across devices."
+    ]
+  },
+  {
+    title:"Industrial Quality Inspection System",
+    repo:"https://github.com/sahoyy/industrial-quality-inspection-system",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Mar 2026 – May 2026",
+    tags:["Frontend Developer","Computer Vision"],
+    bullets:[
+      "Built monitoring dashboards for real-time industrial quality inspection.",
+      "Integrated computer-vision defect-detection outputs into production dashboards.",
+      "Collaborated with robotics and AI teams on system validation."
+    ]
+  },
+  {
+    title:"AI Engineer — Virtual Internship",
+    repo:"https://github.com/sahoyy/syntechx-ai-projects",
+    org:"Syntexchub · Cikarang, Indonesia",
+    date:"Mar – Apr 2026",
+    tags:["AI Intern"],
+    bullets:[
+      "Built face-recognition and hand-gesture recognition apps with OpenCV and MediaPipe.",
+      "Developed rule-based chatbot and expert-system prototypes.",
+      "Delivered multiple AI application prototypes under internship milestones."
+    ]
+  },
+  {
+    title:"Machine Learning — Virtual Internship",
+    repo:"https://github.com/sahoyy/codveda-machine-learning-projects",
+    org:"Codveda Technologies · Cikarang, Indonesia",
+    date:"Mar – Apr 2026",
+    tags:["ML Intern"],
+    bullets:[
+      "Performed data preprocessing, cleaning, and exploratory data analysis.",
+      "Trained classification and prediction models on structured datasets.",
+      "Evaluated performance and generated analytical insights."
+    ]
+  },
+  {
+    title:"Smart AI Image Editing Platform",
+    repo:"https://github.com/sahoyy/smart-ai-image-editor",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Aug – Dec 2025",
+    tags:["Frontend Developer"],
+    bullets:[
+      "Built upload, history-management, and export flows for an image editing platform.",
+      "Integrated frontend with AI-assisted image generation and enhancement features."
+    ]
+  },
+  {
+    title:"Age, Gender & Ethnicity Detection System",
+    repo:"https://github.com/sahoyy/age-gender-ethnicity-detection",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Aug – Dec 2025",
+    tags:["Frontend Developer","Computer Vision"],
+    bullets:[
+      "Built interfaces for demographic prediction from CNN-based classification models.",
+      "Supported visualization and testing of real-time prediction outputs."
+    ]
+  },
+  {
+    title:"Ciprime Cinema Booking System",
+    repo:"https://github.com/sahoyy/ciprime-cinema-booking",
+    org:"President University Academic Project · Cikarang, Indonesia",
+    date:"Jan – Apr 2025",
+    tags:["Full Stack Developer"],
+    bullets:[
+      "Built a cinema ticket booking system with PHP and MySQL.",
+      "Implemented seat reservation, booking, and payment workflows.",
+      "Designed relational database structures for transaction processing."
+    ]
+  }
+];
+
+/* ================= RENDER LENS ================= */
+const lensCard = document.getElementById('lensCard');
+function renderLens(key){
+  const d = LENS_DATA[key];
+  lensCard.innerHTML = `
+    <div class="lens-role">${d.role}</div>
+    <p class="lens-summary">${d.summary}</p>
+    <div class="chip-groups">
+      ${d.groups.map(g => `
+        <div class="chip-group">
+          <h4>${g.title}</h4>
+          <div class="chips">${g.items.map(i=>`<span class="chip">${i}</span>`).join('')}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  lensCard.style.animation = 'none';
+  void lensCard.offsetWidth;
+  lensCard.style.animation = '';
+}
+renderLens('se');
+document.querySelectorAll('.lens-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.lens-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLens(btn.dataset.lens);
+  });
+});
+
+/* ================= RENDER TIMELINE ================= */
+const timelineEl = document.getElementById('timeline');
+timelineEl.innerHTML = EXPERIENCE.map(e => `
+  <div class="tl-item">
+    <div class="tl-card">
+      <div class="tl-top">
+        <h3>${e.title}</h3>
+        <div class="tl-date">${e.date}</div>
+      </div>
+      <div class="tl-org">${e.org}</div>
+      <div class="tl-role-tags">${e.tags.map(t=>`<span>${t}</span>`).join('')}</div>
+      <ul>${e.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+      <a class="tl-link" href="${e.repo}" target="_blank" rel="noopener">View on GitHub ↗</a>
+    </div>
+  </div>
+`).join('');
+
+/* ================= SCROLL REVEAL ================= */
+const revealTargets = document.querySelectorAll('.tl-item, .reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.18 });
+revealTargets.forEach(t=>io.observe(t));
+
+/* ================= 3D TILT ON CARDS ================= */
+function attachTilt(selector, intensity=8){
+  document.querySelectorAll(selector).forEach(card=>{
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `rotateX(${(-y*intensity).toFixed(2)}deg) rotateY(${(x*intensity).toFixed(2)}deg) translateZ(6px)`;
+    });
+    card.addEventListener('mouseleave', ()=>{
+      card.style.transform = '';
+    });
+  });
+}
+attachTilt('.tl-card', 5);
+attachTilt('.cert-card', 6);
+attachTilt('.lead-card', 8);
+
+/* ================= THREE.JS HERO SCENE ================= */
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const heroSection = document.getElementById('hero');
+  let width = heroSection.clientWidth, height = heroSection.clientHeight;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(width, height);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, width/height, 0.1, 1000);
+  camera.position.set(0, 0, 26);
+
+  const inkColor = 0x0e0e12;
+  const cobaltColor = 0x1b2fee;
+  const goldColor = 0xc9a227;
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const geoTypes = [
+    () => new THREE.IcosahedronGeometry(1.6, 0),
+    () => new THREE.BoxGeometry(2.1, 2.1, 2.1),
+    () => new THREE.OctahedronGeometry(1.7, 0),
+    () => new THREE.TorusGeometry(1.3, 0.35, 8, 24),
+  ];
+
+  const shapes = [];
+  const count = 11;
+  for(let i=0; i<count; i++){
+    const geoFn = geoTypes[i % geoTypes.length];
+    const geometry = geoFn();
+    const wire = new THREE.EdgesGeometry(geometry);
+    const color = i % 3 === 0 ? goldColor : (i % 2 === 0 ? cobaltColor : inkColor);
+    const material = new THREE.LineBasicMaterial({ color, transparent:true, opacity:0.75 });
+    const mesh = new THREE.LineSegments(wire, material);
+
+    const spread = 13;
+    mesh.position.set(
+      (Math.random()-0.5) * spread * 1.8,
+      (Math.random()-0.5) * spread,
+      (Math.random()-0.5) * 10 - 4
+    );
+    const scale = 0.6 + Math.random()*1.1;
+    mesh.scale.set(scale, scale, scale);
+    mesh.userData.rotSpeed = {
+      x:(Math.random()-0.5)*0.006,
+      y:(Math.random()-0.5)*0.006,
+      z:(Math.random()-0.5)*0.004
+    };
+    mesh.userData.floatOffset = Math.random()*Math.PI*2;
+    mesh.userData.baseY = mesh.position.y;
+
+    group.add(mesh);
+    shapes.push(mesh);
+  }
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX / window.innerWidth) - 0.5;
+    mouseY = (e.clientY / window.innerHeight) - 0.5;
+  });
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t = 0;
+  function animate(){
+    requestAnimationFrame(animate);
+    if(prefersReduced){ renderer.render(scene, camera); return; }
+    t += 0.016;
+    shapes.forEach(mesh=>{
+      mesh.rotation.x += mesh.userData.rotSpeed.x;
+      mesh.rotation.y += mesh.userData.rotSpeed.y;
+      mesh.rotation.z += mesh.userData.rotSpeed.z;
+      mesh.position.y = mesh.userData.baseY + Math.sin(t + mesh.userData.floatOffset) * 0.4;
+    });
+    group.rotation.y += (mouseX*0.3 - group.rotation.y) * 0.02;
+    group.rotation.x += (mouseY*0.15 - group.rotation.x) * 0.02;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  function onResize(){
+    width = heroSection.clientWidth;
+    height = heroSection.clientHeight;
+    camera.aspect = width/height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+  }
+  window.addEventListener('resize', onResize);
+})();
+</script>
+</body>
+</html>
