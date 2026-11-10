@@ -4,337 +4,609 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Salsabila Hidayat — Portfolio</title>
-<!-- Menggunakan font Google Montserrat dan JetBrains Mono yang tebal & modern sesuai style Rick -->
+<!-- Font Google: Montserrat (Tebal & Modern) dan JetBrains Mono (Teknis) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
+  :root {
     /* Dark visual theme - Rick Waalders Style */
     --background: #000000;
     --card-bg: #0d0d0f;
     --text-primary: #ffffff;
     --text-secondary: #92929e;
     --accent-red: #ff3b30;
-    --accent-yellow: #ffcc00;
     --border-color: #1a1a1f;
+    --border-hover: #33333d;
   }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
     background: var(--background);
     color: var(--text-primary);
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
-    line-height: 1.5;
+    line-height: 1.6;
   }
   
-  /* Font Rick Waalders Header Style */
-  h1, h2, h3 {
-    font-weight: 900;
-    letter-spacing: -0.03em;
-  }
-  .mono{ font-family:'JetBrains Mono', monospace; }
+  ::selection { background: var(--accent-red); color: #fff; }
 
-  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+  /* Typography */
+  h1, h2, h3 { font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
-  /* ---------- NAV ---------- */
-  header.nav{
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(0, 0, 0, 0.85);
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--background); }
+  ::-webkit-scrollbar-thumb { background: #2a2a35; border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: #4a4a55; }
+
+  /* ---------- NAVIGATION ---------- */
+  header.nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
   }
-  .nav-inner{
-    max-width:1180px; margin:0 auto; padding:20px 28px;
-    display:flex; align-items:center; justify-content:space-between;
+  .nav-inner {
+    max-width: 1180px; margin: 0 auto; padding: 20px 28px;
+    display: flex; align-items: center; justify-content: space-between;
   }
-  .brand{
-    font-weight:900; font-size:1.15rem; text-decoration:none;
-    display:flex; align-items:center; gap:10px;
+  .brand {
+    font-weight: 900; font-size: 1.15rem; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px; letter-spacing: 0.05em;
   }
-  .brand .dot{
-    width:12px; height:12px; background:var(--accent-red); border-radius: 50%;
-    display:inline-block;
+  .brand .dot {
+    width: 12px; height: 12px; background: var(--accent-red); border-radius: 50%;
+    display: inline-block;
   }
-  nav.links{ display:flex; gap:32px; }
-  nav.links a{
-    font-family:'JetBrains Mono', monospace; text-transform:uppercase; font-size:0.75rem;
-    letter-spacing:0.05em; text-decoration:none; position:relative; padding-bottom:3px;
-    color: var(--text-secondary); transition: color .2s ease;
+  nav.links { display: flex; gap: 32px; }
+  nav.links a {
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.75rem;
+    letter-spacing: 0.05em; position: relative; padding-bottom: 4px;
+    color: var(--text-secondary); transition: color 0.2s ease; font-weight: 500;
   }
-  nav.links a:hover, nav.links a.active{ color: var(--text-primary); }
-  
-  /* ---------- HERO SECTION (Rick Style with 3D Avatar) ---------- */
-  #hero{
-    position:relative;
-    min-height:100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 100px;
-    overflow:hidden;
+  nav.links a:hover { color: var(--text-primary); }
+  nav.links a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px;
+    background: var(--accent-red); transition: width 0.3s ease;
+  }
+  nav.links a:hover::after { width: 100%; }
+
+  /* ---------- HERO SECTION ---------- */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding-top: 120px; padding-bottom: 60px; overflow: hidden;
     background: radial-gradient(circle at 50% 50%, #0d0d11 0%, #000000 100%);
+    border-bottom: 1px solid var(--border-color);
   }
-  
-  .hero-grid{
-    position:absolute; inset:0; z-index:1; pointer-events:none;
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.015) 1px, transparent 1px);
-    background-size:56px 56px;
-    opacity: 0.7;
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 50px 50px; opacity: 0.8;
   }
-  
-  .hero-inner{ 
-    position:relative; z-index:2; text-align: center; width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  .hero-inner { position: relative; z-index: 2; text-align: center; width: 100%; }
   
   .hero-kicker {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--accent-red);
-    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--accent-red); margin-bottom: 20px; font-weight: 700;
   }
-
-  h1.hero-title{
-    font-size: clamp(2.8rem, 8vw, 5.8rem);
-    color: var(--text-primary);
-    margin-bottom: 12px;
-    line-height: 1.05;
+  h1.hero-title {
+    font-size: clamp(3rem, 8vw, 6rem); color: var(--text-primary);
+    margin-bottom: 16px;
   }
-  
-  /* Rick's Tag Name style */
-  .tag-yellow {
-    background: var(--accent-yellow);
-    color: #000;
-    font-size: clamp(0.6rem, 1.5vw, 0.9rem);
-    padding: 4px 10px;
-    border-radius: 4px;
-    display: inline-block;
-    transform: rotate(-3deg) translateY(-20px) translateX(5px);
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    box-shadow: 3px 3px 0 rgba(0,0,0,0.25);
-  }
-
-  .hero-desc{ 
-    max-width: 650px; 
-    font-size: clamp(1rem, 2.2vw, 1.3rem); 
-    color: var(--text-secondary); 
-    margin-bottom: 40px; 
-    line-height: 1.5;
+  .hero-desc { 
+    max-width: 650px; margin: 0 auto 50px;
+    font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); 
     font-weight: 500;
   }
 
-  /* 3D Scene Wrapper - Meniru pose di Rick Waalders */
+  /* 3D Visual Area Placeholder */
   .hero-visual-3d {
-    position: relative;
-    width: 100%;
-    max-width: 750px;
-    height: 380px;
-    margin-top: -20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    position: relative; width: 100%; max-width: 900px; height: 400px; margin: 0 auto;
+    display: flex; justify-content: center; align-items: flex-end;
+  }
+  
+  /* Ganti URL di bawah ini dengan gambar hasil render 3D Anda (yang ada Salsabila, Laptop, dll) */
+  .hero-image-main {
+    width: 100%; height: 100%; object-fit: contain;
+    animation: floatHero 6s ease-in-out infinite;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+  }
+  @keyframes floatHero {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
   }
 
-  /* Avatar Salsabila Tengah */
-  .avatar-container {
-    width: 240px;
-    height: 240px;
-    z-index: 5;
-    position: relative;
-    animation: floatAvatar 6s ease-in-out infinite;
-  }
-  .avatar-3d {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0px 10px 30px rgba(0,0,0,0.5));
-  }
-
-  /* Objek-objek bergerak (Hover & float) di kiri dan kanan */
-  .floating-obj {
-    position: absolute;
-    z-index: 4;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4));
-  }
-  .obj-left-laptop {
-    left: 10%; bottom: 15%; width: 140px;
-    animation: floatLeftLaptop 8s ease-in-out infinite;
-  }
-  .obj-left-cam {
-    left: 28%; bottom: 50%; width: 60px;
-    animation: floatLeftCam 5s ease-in-out infinite 1s;
-  }
-  .obj-left-ai {
-    left: 5%; bottom: 55%; width: 55px;
-    animation: floatLeftAi 7s ease-in-out infinite 0.5s;
-  }
-  .obj-right-cam {
-    right: 12%; bottom: 12%; width: 110px;
-    animation: floatRightCam 9s ease-in-out infinite;
-  }
-  .obj-right-gears {
-    right: 5%; bottom: 48%; width: 70px;
-    animation: floatRightGears 6s ease-in-out infinite 2s;
-  }
-  .obj-right-chips {
-    right: 25%; bottom: 55%; width: 55px;
-    animation: floatRightChips 7s ease-in-out infinite 1.5s;
-  }
-
-  /* Animasi Bergerak Mengambang Meniru Perputaran Rick */
-  @keyframes floatAvatar {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(1.5deg); }
-  }
-  @keyframes floatLeftLaptop {
-    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-    50% { transform: translateY(-16px) rotate(-4deg) scale(1.03); }
-  }
-  @keyframes floatLeftCam {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(8deg); }
-  }
-  @keyframes floatLeftAi {
-    0%, 100% { transform: translateY(0) rotate(0) scale(1); }
-    50% { transform: translateY(-8px) rotate(-10deg) scale(0.95); }
-  }
-  @keyframes floatRightCam {
-    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-    50% { transform: translateY(-14px) rotate(6deg) scale(1.02); }
-  }
-  @keyframes floatRightGears {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-12px) rotate(15deg); }
-  }
-  @keyframes floatRightChips {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(-8deg); }
-  }
-
-  /* Indikator Halaman (Dots Merah/Gelap sebelah kiri) */
-  .page-indicator {
-    position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    z-index: 10;
-  }
-  .indicator-dot {
-    width: 14px;
-    height: 4px;
-    background: #2a2a35;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-  }
-  .indicator-dot.active {
-    width: 24px;
-    background: var(--accent-red);
-  }
-
-  /* Panah Gulir Bulat Bawah */
   .scroll-down {
-    position: absolute;
-    bottom: 40px;
-    right: 40px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #111114;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-secondary);
-    text-decoration: none;
-    z-index: 10;
-    transition: all 0.3s ease;
+    position: absolute; bottom: 40px; right: 40px;
+    width: 46px; height: 46px; border-radius: 50%; background: #111114;
+    border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center;
+    color: var(--text-secondary); z-index: 10; transition: all 0.3s ease;
   }
   .scroll-down:hover {
-    color: var(--text-primary);
-    border-color: var(--accent-red);
-    transform: translateY(3px);
+    color: var(--text-primary); border-color: var(--accent-red); transform: translateY(5px);
   }
 
-  /* SECTIONS */
-  section{ padding:110px 0; border-bottom: 1px solid var(--border-color); position:relative; }
-  .section-head{ margin-bottom:56px; max-width:760px; }
-  .section-head h2{ font-size:clamp(2rem,5vw,3.2rem); margin-top:14px; }
+  /* ---------- GENERAL SECTIONS ---------- */
+  section { padding: 120px 0; border-bottom: 1px solid var(--border-color); position: relative; }
+  .section-head { margin-bottom: 60px; max-width: 800px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase;
+    letter-spacing: 0.15em; font-size: 0.75rem; font-weight: 700; color: var(--accent-red);
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .eyebrow::before { content: ""; width: 30px; height: 2px; background: var(--accent-red); }
+  .section-head h2 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .about-text p { font-size: 1.1rem; margin-bottom: 24px; color: var(--text-secondary); }
+  .about-text strong { color: var(--text-primary); font-weight: 700; }
   
-  /* Sisa UI untuk Experience, Lenses dll */
-  /* Silakan isi dengan data detail dari code sebelumnya... */
+  .edu-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); padding: 32px;
+    border-radius: 8px; transition: transform 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 24px;
+  }
+  .edu-card:hover { border-color: var(--border-hover); transform: translateY(-5px); }
+  .edu-card h3 { font-size: 1.4rem; margin-bottom: 8px; }
+  .edu-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent-red);
+    margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .edu-card ul { margin: 16px 0 0 20px; font-size: 0.95rem; color: var(--text-secondary); }
+  .gpa-badge {
+    display: inline-block; margin-top: 20px; font-family: 'JetBrains Mono', monospace;
+    background: rgba(255, 59, 48, 0.1); color: var(--accent-red); padding: 6px 14px;
+    font-size: 0.8rem; font-weight: 700; border-radius: 4px; border: 1px solid rgba(255, 59, 48, 0.2);
+  }
+
+  /* ---------- LENS SWITCHER (FOCUS) ---------- */
+  .lens-tabs { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+  .lens-tab {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase;
+    letter-spacing: 0.05em; padding: 14px 24px; background: transparent;
+    border: 1px solid var(--border-color); color: var(--text-secondary);
+    cursor: pointer; transition: all 0.3s ease; border-radius: 4px; font-weight: 700;
+  }
+  .lens-tab.active { background: var(--text-primary); color: var(--background); border-color: var(--text-primary); }
+  .lens-tab:not(.active):hover { border-color: var(--text-primary); color: var(--text-primary); }
+
+  .lens-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); padding: 48px; border-radius: 8px;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .lens-card h3 { font-size: 2.2rem; margin-bottom: 12px; }
+  .lens-summary { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px; max-width: 800px; }
+  
+  .chip-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+  .chip-group h4 {
+    font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 0.75rem;
+    letter-spacing: 0.1em; margin-bottom: 16px; color: var(--accent-red);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    padding: 8px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);
+    border-radius: 4px; color: var(--text-primary); transition: all 0.2s ease;
+  }
+  .chip:hover { background: var(--text-primary); color: var(--background); }
+
+  /* ---------- EXPERIENCE TIMELINE ---------- */
+  .timeline { position: relative; margin-top: 40px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--border-color);
+  }
+  .tl-item {
+    position: relative; padding: 0 0 50px 40px; opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .tl-item.in { opacity: 1; transform: translateY(0); }
+  .tl-item::before {
+    content: ""; position: absolute; left: 0; top: 8px; width: 16px; height: 16px;
+    background: var(--background); border: 2px solid var(--accent-red); border-radius: 50%;
+  }
+  
+  .tl-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); padding: 32px;
+    border-radius: 8px; transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .tl-card:hover { border-color: var(--border-hover); transform: translateX(5px); }
+  .tl-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+  .tl-card h3 { font-size: 1.5rem; }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase;
+    color: var(--accent-red); font-weight: 700;
+  }
+  .tl-org { font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 16px; font-weight: 500; }
+  .tl-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tl-tags span {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase;
+    background: rgba(255,255,255,0.05); padding: 4px 10px; border-radius: 4px;
+  }
+  .tl-card ul { margin-left: 20px; font-size: 1rem; color: var(--text-secondary); }
+  .tl-card ul li { margin-bottom: 8px; }
+
+  /* ---------- LEADERSHIP & AWARDS ---------- */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+  .box-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); padding: 32px;
+    border-radius: 8px; transition: all 0.3s ease;
+  }
+  .box-card:hover { border-color: var(--border-hover); transform: translateY(-5px); }
+  .box-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; text-transform: uppercase;
+    color: var(--accent-red); margin-bottom: 12px; font-weight: 700;
+  }
+  .box-card h3 { font-size: 1.25rem; margin-bottom: 8px; }
+  .box-card p { font-size: 0.95rem; color: var(--text-secondary); }
+  .box-link {
+    display: inline-block; margin-top: 20px; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary);
+    border-bottom: 1px solid var(--accent-red); padding-bottom: 2px;
+  }
+  .box-link:hover { color: var(--accent-red); }
+
+  /* ---------- CONTACT ---------- */
+  #contact { padding-bottom: 80px; border-bottom: none; }
+  .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .contact-title { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; margin-bottom: 30px; }
+  .contact-title span { color: var(--accent-red); }
+  
+  .contact-list { list-style: none; }
+  .contact-list li {
+    border-bottom: 1px solid var(--border-color); padding: 20px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 1rem;
+  }
+  .contact-list li span.lbl { text-transform: uppercase; font-size: 0.75rem; color: var(--text-secondary); }
+  .contact-list a:hover { color: var(--accent-red); }
+
+  footer {
+    text-align: center; padding: 40px 0; border-top: 1px solid var(--border-color);
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; text-transform: uppercase;
+    color: var(--text-secondary); letter-spacing: 0.05em; background: var(--background);
+  }
+
+  /* Utilities */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 860px) {
+    nav.links { display: none; }
+    .about-grid, .contact-wrap { grid-template-columns: 1fr; }
+    .tl-item { padding-left: 30px; }
+  }
 </style>
 </head>
 <body>
 
 <header class="nav">
   <div class="nav-inner">
-    <a href="#hero" class="brand"><span class="dot"></span>SALSABILA H.</a>
+    <a href="#hero" class="brand"><span class="dot"></span>SALSABILA HIDAYAT</a>
     <nav class="links">
-      <a href="#about" class="active">Work</a>
-      <a href="#focus">Focus</a>
-      <a href="#leadership">Leadership</a>
       <a href="#about">About</a>
+      <a href="#focus">Focus</a>
+      <a href="#experience">Experience</a>
+      <a href="#leadership">Leadership</a>
     </nav>
   </div>
 </header>
 
-<div class="page-indicator">
-  <div class="indicator-dot active"></div>
-  <div class="indicator-dot"></div>
-  <div class="indicator-dot"></div>
-  <div class="indicator-dot"></div>
-  <div class="indicator-dot"></div>
-</div>
-
-<!-- ============ HERO SECTON (Rick's Aesthetic) ============ -->
+<!-- ============ HERO ============ -->
 <section id="hero">
   <div class="hero-grid"></div>
   <div class="wrap hero-inner">
-    <div class="hero-kicker">Karawang, West Java, Indonesia — Expected 2027</div>
-    <h1 class="hero-title">
-      Hi, I'm Salsabila <span class="tag-yellow">Salsa H.</span>
-    </h1>
+    <div class="hero-kicker">Informatics / AI Specialization — 2027</div>
+    <!-- Label kuning "Salsa H." Dihapus sesuai permintaan -->
+    <h1 class="hero-title">Hi, I'm Salsabila</h1>
     <p class="hero-desc">
-      I train AI models, develop computer vision, and design interfaces for web and mobile.
+      I train AI models, develop computer vision, and design interfaces for web and mobile. Building real academic products end-to-end.
     </p>
 
-    <!-- Visual 3D Meniru Total Tampilan Rick Waalders -->
     <div class="hero-visual-3d">
-      
-      <!-- KIRI: Laptop, Camera, AI microchip float -->
-      <img src="asset-laptop-ai.png" alt="Laptop AI visual" class="floating-obj obj-left-laptop">
-      <img src="asset-camera.png" alt="Mini camera visual" class="floating-obj obj-left-cam">
-      <img src="asset-chip-blue.png" alt="Chip logic visual" class="floating-obj obj-left-ai">
-      
-      <!-- TENGAH: Karakter 3D Keren (Salsabila dengan Kacamata & Hoodie Gelap) -->
-      <div class="avatar-container">
-        <img src="https://example.com/salsa-3d-avatar-render.png" alt="Salsabila 3D Render" class="avatar-3d">
-      </div>
-      
-      <!-- KANAN: Cyber Vision camera, Gears, dynamic chips -->
-      <img src="asset-arm-cam.png" alt="Cyber Camera visual" class="floating-obj obj-right-cam">
-      <img src="asset-gears.png" alt="Micro logic visual" class="floating-obj obj-right-gears">
-      <img src="asset-neural-chip.png" alt="Neuro sensor visual" class="floating-obj obj-right-chips">
-      
+      <!-- 
+        UBAH ATRIBUT SRC DI BAWAH INI dengan gambar 3D utuh (yang berisi Anda berjas formal, hijab, tanpa kacamata, beserta laptop/AI floating di sekitarnya) 
+      -->
+      <img src="letakkan_gambar_render_3d_anda_disini.png" alt="Salsabila 3D Avatar with Tech Objects" class="hero-image-main">
     </div>
   </div>
   
-  <a href="#about" class="scroll-down">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+  <a href="#about" class="scroll-down" aria-label="Scroll Down">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
   </a>
 </section>
 
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">About Me</span>
+      <h2>Building at the intersection of AI and interface.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm an Informatics undergraduate at <strong>President University</strong>, specializing in <strong>Artificial Intelligence</strong>. Across academic projects and virtual internships, I move fluidly between roles — writing backend logic, training computer-vision models, and designing intuitive user interfaces.</p>
+        <p>That range is intentional. I maintain focused skills in Software Engineering, AI Engineering, Data Science, and Web Development because I genuinely work across all four to deliver complete, production-ready systems.</p>
+      </div>
+      <div class="reveal">
+        <div class="edu-card">
+          <div class="edu-meta">President University · Expected 2027</div>
+          <h3>B.Sc. Informatics — AI</h3>
+          <ul>
+            <li>Artificial Intelligence &amp; Machine Learning</li>
+            <li>Computer Vision &amp; NLP</li>
+            <li>Software Engineering &amp; Database Systems</li>
+          </ul>
+          <span class="gpa-badge">GPA 3.65 / 4.00</span>
+        </div>
+        <div class="edu-card">
+          <div class="edu-meta">SMA Modern Riyadhul Jannah · 2024</div>
+          <h3>Science Major</h3>
+          <p style="margin-top: 10px; font-size: 0.95rem; color: var(--text-secondary);">Student Council President 2023–2024</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOCUS (LENS SWITCHER) ============ -->
+<section id="focus">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Expertise</span>
+      <h2>One experience, four focuses.</h2>
+    </div>
+    <div class="lens-tabs reveal" role="tablist">
+      <button class="lens-tab active" data-lens="ai">AI Engineer</button>
+      <button class="lens-tab" data-lens="se">Software Engineer</button>
+      <button class="lens-tab" data-lens="ds">Data Scientist</button>
+      <button class="lens-tab" data-lens="web">Web Developer</button>
+    </div>
+    <div id="lensCard" class="reveal">
+      <!-- Di-inject oleh JavaScript di bawah -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Experience</span>
+      <h2>Projects, shipped.</h2>
+    </div>
+    <div class="timeline" id="timeline">
+      <!-- Di-inject oleh JavaScript di bawah -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ LEADERSHIP & AWARDS ============ -->
+<section id="leadership">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Leadership & Certifications</span>
+      <h2>Beyond the codebase.</h2>
+    </div>
+    <div class="grid-3">
+      <div class="box-card reveal">
+        <div class="box-meta">Jan 2026 — Jun 2026</div>
+        <h3>Project Manager</h3>
+        <p style="margin-bottom: 10px; color: #fff;">PUDC × GDGoC Telkom</p>
+        <p>Led the planning and execution of a collaborative Study Path program between President University Developer Club and GDGoC Telkom University Jakarta.</p>
+      </div>
+      <div class="box-card reveal">
+        <div class="box-meta">Oct 2025 — Present</div>
+        <h3>Core Team Member</h3>
+        <p style="margin-bottom: 10px; color: #fff;">PUDC</p>
+        <p>Supported execution of technical workshops and student development initiatives for technology-focused community activities.</p>
+      </div>
+      <div class="box-card reveal">
+        <div class="box-meta">Certification</div>
+        <h3>IBM SkillsBuild AI</h3>
+        <p>Completed certifications in Artificial Intelligence Fundamentals and Introduction to Artificial Intelligence.</p>
+        <a href="#" class="box-link">View Credential</a>
+      </div>
+      <div class="box-card reveal">
+        <div class="box-meta">Certification</div>
+        <h3>AWS Cloud Security</h3>
+        <p>Completed AWS Academy Cloud Security Foundations focusing on cloud architecture and best practices.</p>
+        <a href="#" class="box-link">View Credential</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-wrap reveal">
+      <div>
+        <span class="eyebrow">Get in touch</span>
+        <h2 class="contact-title">Let's build<br>something <span>real.</span></h2>
+        <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 400px;">
+          Open to internships and collaborative projects across software engineering, AI/ML, and web development.
+        </p>
+      </div>
+      <div>
+        <ul class="contact-list">
+          <li><span class="lbl">Email</span><a href="mailto:hidayatsalsa7@gmail.com">hidayatsalsa7@gmail.com</a></li>
+          <li><span class="lbl">Phone</span><a href="tel:+6285814404361">+62 858 144 043 61</a></li>
+          <li><span class="lbl">LinkedIn</span><a href="https://linkedin.com/in/salsabila-hidayat20" target="_blank">/in/salsabila-hidayat20</a></li>
+          <li><span class="lbl">Location</span><span>Karawang, Indonesia</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Salsabila Hidayat. Built with intent.
+</footer>
+
+<script>
+/* ================= DATA FOCUS (LENS) ================= */
+const LENS_DATA = {
+  ai: {
+    title: "AI Engineer",
+    summary: "Building applied AI features — NLP summarization and chatbots, LLM-integrated workflows, and computer-vision pipelines — then wiring them into working products.",
+    groups: [
+      { title: "AI / ML", items: ["Machine Learning", "Deep Learning", "Computer Vision", "NLP", "LLM Integration"] },
+      { title: "Frameworks", items: ["OpenCV", "MediaPipe", "FastAPI", "Flask"] },
+      { title: "Tools", items: ["Docker", "Git", "Jupyter"] }
+    ]
+  },
+  se: {
+    title: "Software Engineer",
+    summary: "Full-stack focused: designing system architecture, integrating backend services and APIs, and shipping database-driven features across React/Next.js frontends and Flask/FastAPI backends.",
+    groups: [
+      { title: "Languages", items: ["Python", "Java", "JavaScript", "PHP", "SQL"] },
+      { title: "Frameworks", items: ["React", "Next.js", "FastAPI", "Flask"] },
+      { title: "Databases", items: ["MySQL", "PostgreSQL", "SQLite"] }
+    ]
+  },
+  ds: {
+    title: "Data Scientist",
+    summary: "Turning raw datasets into decisions: cleaning and exploring data, engineering features, training classification/clustering models, and evaluating results rigorously.",
+    groups: [
+      { title: "Modeling", items: ["Classification", "Clustering", "Model Evaluation"] },
+      { title: "Data Work", items: ["Data Cleaning", "EDA", "Feature Engineering"] },
+      { title: "Libraries", items: ["Pandas", "NumPy", "Scikit-Learn"] }
+    ]
+  },
+  web: {
+    title: "Web Developer",
+    summary: "Responsive, accessible interfaces backed by solid REST APIs — from dashboards for real-time data to full booking systems with session and payment workflows.",
+    groups: [
+      { title: "Frontend", items: ["HTML", "CSS", "JavaScript", "React"] },
+      { title: "Backend", items: ["Flask", "FastAPI", "REST API Design"] },
+      { title: "Databases", items: ["MySQL", "PostgreSQL", "Firebase"] }
+    ]
+  }
+};
+
+/* ================= DATA EXPERIENCE ================= */
+const EXPERIENCE = [
+  {
+    title: "AI Engineer - Astra Predictive Maintenance",
+    org: "President University Academic Project",
+    date: "Jun 2026 – Jul 2026",
+    tags: ["AI Engineer", "Machine Learning"],
+    bullets: [
+      "Developed an AI-powered predictive maintenance dashboard for monitoring industrial induction motors.",
+      "Implemented machine learning models for fault classification, health scoring, and remaining useful life (RUL) prediction.",
+      "Developed an AI maintenance assistant using a local LLM to provide context-aware insights based on live motor data."
+    ]
+  },
+  {
+    title: "PU Academic Hub",
+    org: "President University Academic Project",
+    date: "Jan 2026 – May 2026",
+    tags: ["Software Engineer", "AI Engineer"],
+    bullets: [
+      "Developed AI-powered academic community features including discussion summarization, FAQ generation, and chat-bot services.",
+      "Integrated NLP and LLM-based workflows for automated content analysis.",
+      "Designed AI modules supporting study groups and academic collaboration."
+    ]
+  },
+  {
+    title: "Industrial Quality Inspection System",
+    org: "President University Academic Project",
+    date: "Mar 2026 – May 2026",
+    tags: ["Computer Vision", "Frontend"],
+    bullets: [
+      "Developed monitoring dashboards for AI-powered defect detection and robotic sorting systems.",
+      "Integrated computer vision outputs into real-time production monitoring interfaces."
+    ]
+  },
+  {
+    title: "Artificial Intelligence Intern",
+    org: "Syntexchub Virtual Internship",
+    date: "Mar 2026 – Apr 2026",
+    tags: ["AI Intern"],
+    bullets: [
+      "Developed computer vision applications including face recognition and hand gesture recognition systems using OpenCV and MediaPipe.",
+      "Built rule-based chat-bot and expert system applications for domain-specific problem solving."
+    ]
+  },
+  {
+    title: "Machine Learning Intern",
+    org: "Codveda Technologies Virtual Internship",
+    date: "Mar 2026 – Apr 2026",
+    tags: ["ML Intern"],
+    bullets: [
+      "Performed data preprocessing, exploratory data analysis, and machine learning experimentation.",
+      "Developed classification and prediction models using structured datasets."
+    ]
+  }
+];
+
+/* ================= RENDER LENS ================= */
+const lensCard = document.getElementById('lensCard');
+function renderLens(key) {
+  const d = LENS_DATA[key];
+  lensCard.innerHTML = `
+    <div class="lens-card">
+      <h3>${d.title}</h3>
+      <p class="lens-summary">${d.summary}</p>
+      <div class="chip-groups">
+        ${d.groups.map(g => `
+          <div class="chip-group">
+            <h4>${g.title}</h4>
+            <div class="chips">${g.items.map(i => `<span class="chip">${i}</span>`).join('')}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+renderLens('ai'); // Default load
+
+document.querySelectorAll('.lens-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lens-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLens(btn.dataset.lens);
+  });
+});
+
+/* ================= RENDER TIMELINE ================= */
+const timelineEl = document.getElementById('timeline');
+timelineEl.innerHTML = EXPERIENCE.map(e => `
+  <div class="tl-item reveal">
+    <div class="tl-card">
+      <div class="tl-top">
+        <h3>${e.title}</h3>
+        <div class="tl-date">${e.date}</div>
+      </div>
+      <div class="tl-org">${e.org}</div>
+      <div class="tl-tags">${e.tags.map(t => `<span>${t}</span>`).join('')}</div>
+      <ul>${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+    </div>
+  </div>
+`).join('');
+
+/* ================= SCROLL REVEAL (INTERSECTION OBSERVER) ================= */
+const revealTargets = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealTargets.forEach(t => io.observe(t));
+</script>
 </body>
 </html>
